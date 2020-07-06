@@ -37,10 +37,10 @@ import socket
 import time
 import logging
 
-from gmetad_config import GmetadConfig, getConfig
-from gmetad_random import getRandomInterval
-from gmetad_data import DataStore
-from gmetad_data import Element
+from .gmetad_config import GmetadConfig, getConfig
+from .gmetad_random import getRandomInterval
+from .gmetad_data import DataStore
+from .gmetad_data import Element
 
 class GmondContentHandler(xml.sax.ContentHandler):
     ''' This class implements the XML parser used to parse XML data from a gmond cluster. '''
@@ -133,7 +133,7 @@ class GmondReader(threading.Thread):
                     buf = sock.recv(8192)
                     if not buf:
                         break
-                    xmlbuf += buf
+                    xmlbuf += buf.decode("utf-8")
                 sock.close()
                 # Create an XML parser and parse the buffer
                 gch = GmondContentHandler()
